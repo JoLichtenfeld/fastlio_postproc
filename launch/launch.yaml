@@ -1,0 +1,19 @@
+launch:
+
+- set_remap:
+    from: "/tf"
+    to: "tf"
+- set_remap:
+    from: "/tf_static"
+    to: "tf_static"
+
+# Spin up a node
+- node:
+    pkg: "fast_lio"
+    launch_file
+    name: "<name>"
+    output: "screen"
+    respawn: "true"
+    param:
+        - from: $(find-pkg-share fastlio_postproc)/config/<launch_name>.yaml
+          allow_substs: true
