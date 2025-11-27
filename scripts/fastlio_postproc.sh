@@ -203,13 +203,19 @@ python3 "$SCRIPT_DIR/render_jinja.py" \
 #######################################
 # Prepare Commands
 #######################################
+
 FAST_LIO_CMD="ros2 launch fast_lio mapping.launch.py config_path:=$CONFIG_DIR config_file:=$(basename "$OUTPUT_CONFIG_FILE") rviz:=False"
-BAG_CMD="sleep 1; ros2 bag play \"$BAGFILE\" --topic $IMU_TOPIC $LIDAR_TOPIC"
+
+# Build topic list for ros2 bag play (IMU + all lidar topics)
+ALL_LIDAR_TOPICS="${LIDAR_RAW[*]}"
+BAG_CMD="sleep 1; ros2 bag play \"$BAGFILE\" --topic $IMU_TOPIC $ALL_LIDAR_TOPICS"
+
 RVIZ_CMD="rviz2 -d \"$RVIZ_OUTPUT_FILE\""
 
 print_info "FAST-LIO command: $FAST_LIO_CMD"
 print_info "bag play command: $BAG_CMD"
 print_info "rviz command: $RVIZ_CMD"
+
 
 #######################################
 # Start tmux session
