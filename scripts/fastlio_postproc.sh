@@ -47,9 +47,9 @@ fi
 #######################################
 # Extract Topics
 #######################################
-mapfile -t IMU_TOPICS < <(echo "$BAG_INFO" | grep -E "sensor_msgs/msg/Imu" | awk '{print $2}')
-mapfile -t PCL_TOPICS < <(echo "$BAG_INFO" | grep -E "sensor_msgs/msg/PointCloud2" | awk '{print $2}')
-mapfile -t LIVOX_TOPICS < <(echo "$BAG_INFO" | grep -E "livox_ros_driver2/msg/CustomMsg" | awk '{print $2}')
+mapfile -t IMU_TOPICS < <(echo "$BAG_INFO" | grep -E "sensor_msgs/msg/Imu" | sed -n 's/.*Topic: \([^ ]*\).*/\1/p')
+mapfile -t PCL_TOPICS < <(echo "$BAG_INFO" | grep -E "sensor_msgs/msg/PointCloud2" | sed -n 's/.*Topic: \([^ ]*\).*/\1/p')
+mapfile -t LIVOX_TOPICS < <(echo "$BAG_INFO" | grep -E "livox_ros_driver2/msg/CustomMsg" | sed -n 's/.*Topic: \([^ ]*\).*/\1/p')
 
 HAS_PCL=${#PCL_TOPICS[@]}
 HAS_LIVOX=${#LIVOX_TOPICS[@]}
@@ -74,7 +74,7 @@ select_topic() {
         return
     fi
 
-    echo -e "\n$prompt"
+    echo -e "\n$prompt" >&2
     select topic in "${topics[@]}"; do
         if [ -n "$topic" ]; then
             echo "$topic"

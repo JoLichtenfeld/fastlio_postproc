@@ -14,7 +14,7 @@
             lid_topic:  "{{ lidar_topic }}"
             imu_topic:  "{{ imu_topic }}"
             map_frame:  "odom"
-            base_frame: "lidar_sensor_laser_frame"
+            #base_frame: will be set automatically by FAST-LIO to the frame_id of the IMU message
             #sensor_init_frame: "sensor_init"
             # lidar_frame is set automatically to the frame_id of the lidar message
             time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
@@ -47,7 +47,7 @@
             effect_map_en: true          # true: publish Effects
             map_en: true                 # true: publish Map cloud
             scan_publish_en:  true       # false: close all the point cloud output
-            dense_publish_en: true      # false: low down the points number in a global-frame point clouds scan.
+            dense_publish_en: false      # false: low down the points number in a global-frame point clouds scan.
             scan_bodyframe_pub_en: true  # true: output the point cloud scans in IMU-body-frame
 
         pcd_save:
